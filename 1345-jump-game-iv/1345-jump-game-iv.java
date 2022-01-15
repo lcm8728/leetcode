@@ -4,7 +4,8 @@ class Solution {
         boolean[] visited = new boolean[arr.length];
         
         for(int i = 0; i < arr.length; ++i) {
-            indicesOfValues.computeIfAbsent(arr[i], k -> new ArrayList<Integer>()).add(i);
+            if(indicesOfValues.containsKey(arr[i])) indicesOfValues.get(arr[i]).add(i);
+            else indicesOfValues.put(arr[i], new ArrayList<>(Arrays.asList(i)));
         }
         
         LinkedList<int[]> q = new LinkedList<>();
