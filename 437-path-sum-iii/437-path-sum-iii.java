@@ -15,23 +15,21 @@
  */
 class Solution {    
     public int pathSum(TreeNode root, int targetSum) {
-        return recurse(root, targetSum);
+        HashMap<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0, 1);
+        return find(root, 0, targetSum, preSum);
     }
     
-    private int recurse(TreeNode node, int target) {
-        if(node == null) return 0;
-        int sum = 0;
-        sum += find(node, target);
-        if(node.left != null) sum += recurse(node.left, target);
-        if(node.right != null) sum += recurse(node.right, target);
-        return sum;
-    }
-    
-    private int find(TreeNode node, int target) {
-        int sum = 0;
-        if(node.val == target) sum += 1;
-        if(node.left != null) sum += find(node.left, target - node.val);
-        if(node.right != null) sum += find(node.right, target - node.val);
-        return sum;
+    private int find(TreeNode node, int curSum, int target, HashMap<Integer, Integer> preSum) {
+        if(node == null) {
+            return 0;
+        }
+        
+        curSum += node.val;
+        int ret = preSum.getOrDefault(curSum - target, 0);
+        preSum.put(curSum, preSum.getOrDefault(curSum, 0) + 1);
+        ret += find(node.left, curSum, target, preSum) + find(node.right, curSum, target, preSum);
+        preSum.put(curSum, preSum.get(curSum) - 1);
+        return ret;
     }
 }
