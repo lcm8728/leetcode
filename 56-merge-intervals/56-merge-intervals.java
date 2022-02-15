@@ -3,13 +3,7 @@ class Solution {
         int n = intervals.length;
         
         // sort intervals
-        Arrays.sort(intervals, (a, b) -> {
-            if(a[0] != b[0]) {
-                return a[0] - b[0];
-            } else {
-                return a[1] - b[1];
-            }
-        });
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         
         // merge
         List<int[]> ans = new ArrayList<>();
