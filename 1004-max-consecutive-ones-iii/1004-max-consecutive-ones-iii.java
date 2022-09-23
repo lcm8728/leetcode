@@ -6,24 +6,19 @@ class Solution {
         int max = 0;
         
         while (r < nums.length) {
-            if (nums[r] == 1) {
-                max = Math.max(max, r - l + 1);
-                r++;
-            }
-            
-            else if (flips < k) {
-                max = Math.max(max, r - l + 1);
+            if (nums[r] == 0) {
                 flips++;
-                r++;
             }
             
-            else {
-                if (nums[l] == 0 && 0 < flips && flips <= k) {
+            while (l <= r && flips > k) {
+                if (nums[l] == 0) {
                     flips--;
                 }
                 l++;
-                r = Math.max(r, l);
             }
+            
+            max = Math.max(max, r - l + 1);
+            r++;
         }
         
         return max;
